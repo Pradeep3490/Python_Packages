@@ -1,7 +1,7 @@
 
-_______________________________________________________________________________
+
 Example of using the generalized_blender module to run classification ensembles
-_______________________________________________________________________________
+-------------------------------------------------------------------------------
 
 
 
@@ -40,28 +40,33 @@ base_epochs: no of epochs to be used for Keras in base_models
 
 second_epochs: no of epochs to be used for Keras in blending_models
 
+
 Example
--------
+-----------
 
-# First define the list of base models and blending models you intend to use.
+First define the list of base models and blending models you intend to use.
  
  
-# For models other than Xgboost and Keras neural networks the user can define
- model parameters within the base_models and blending_models lists.
+For models other than Xgboost and Keras neural networks the user can define
+model parameters within the base_models and blending_models lists.
 
-base_models = ['xgb1', LogisticRegression(C=0.1), 'xgb2', 'keras1']
-blending_models = ['keras1','keras2','xgb1']
-verbose = True
-nclasses = len(targetencoder.classes_)
-n_folds =2
+ base_models = ['xgb1', LogisticRegression(C=0.1), 'xgb2', 'keras1']
+
+ blending_models = ['keras1','keras2','xgb1']
+
+ verbose = True
+
+ nclasses = len(targetencoder.classes_)
+
+ n_folds =2
 
 
-# Depending on number of XGBoost models defined in base_models and blending_models
-  define XGBoost parameters. Here, we're using 2 XGBoost models in base_models and
-  1 XGBoost model in blending_models.
+Depending on number of XGBoost models defined in base_models and blending_models
+define XGBoost parameters. Here, we're using 2 XGBoost models in base_models and
+1 XGBoost model in blending_models.
 
-  After defining parameters, put all base_models XGBOost parameters in a list and
-  do the same for blending_models XGBoost parameters
+After defining parameters, put all base_models XGBOost parameters in a list and
+do the same for blending_models XGBoost parameters
 
 
 
@@ -171,8 +176,9 @@ ________________________________________________________________________________
 #
   batch = 400 # define batch size as a number that can divide the number of rows in training set
 
- # Next define the number of epochs i.e., number of times to go through the entire dataset
-   The lists below should reflect the number of Keras defined under base_models and blending_models lists earlier
+Next define the number of epochs i.e., number of times to go through the entire dataset
+The lists below should reflect the number of Keras defined under base_models and blending_models lists earlier
+  
   base_epochs = [2] # number of times to go through the entire dataset in base_models level
   second_epochs = [2,2] # number of times to go through the entire dataset in blending_models level
 
@@ -267,7 +273,7 @@ The 'Result' dataset is basically a numpy array of all predicted probabilities f
 blending_models. For instance, here the number of blending_models is 3 and number of target
 variable classes is 12. So the 'Result' array will have 36 columns
 
-# The user can then take the 'Result' and compute either mean, geo mean or other metric
+The user can then take the 'Result' and compute either mean, geo mean or other metric
 to combine all blending_models predictions or even feed them into another level of modeling
 
 
