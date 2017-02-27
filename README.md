@@ -251,9 +251,9 @@ ________________________________________________________________________________
 Once the definition of parameters and other model related structures are done the user
 can install and import the module from PyPi and user
 
-For installation
-----------------
-    pip install generalized_blender to install the latest version from PyPi
+For installation from PyPi
+--------------------------
+    pip install generalized_blender
 
 Then use the following,
 
