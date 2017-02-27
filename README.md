@@ -1,16 +1,15 @@
 
 
-Example of using the generalized_blender module to run classification ensembles
--------------------------------------------------------------------------------
-
-
+-----------------------------------------------------------------------------------------
+Example of using the 'generalized_blender' python package to run classification ensembles
+-----------------------------------------------------------------------------------------
 
 
 Trains a series of base models using K-fold cross-validation, then combines
 the predictions of each model into a set of features that are used to train
 a high-level set of blending models model.
 
-
+Currently available in PyPi for installation
 
 Parameters
 -----------
@@ -50,15 +49,15 @@ First define the list of base models and blending models you intend to use.
 For models other than Xgboost and Keras neural networks the user can define
 model parameters within the base_models and blending_models lists.
 
- base_models = ['xgb1', LogisticRegression(C=0.1), 'xgb2', 'keras1']
+    base_models = ['xgb1', LogisticRegression(C=0.1), 'xgb2', 'keras1']
 
- blending_models = ['keras1','keras2','xgb1']
+    blending_models = ['keras1','keras2','xgb1']
 
- verbose = True
+    verbose = True
 
- nclasses = len(targetencoder.classes_)
+    nclasses = len(targetencoder.classes_)
 
- n_folds =2
+    n_folds =2
 
 
 Depending on number of XGBoost models defined in base_models and blending_models
