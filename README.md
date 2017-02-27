@@ -188,7 +188,7 @@ The lists below should reflect the number of Keras defined under base_models and
 --------------------------------
 
 def baseline_keras_model_1():
-    # create model
+   
     model = Sequential()
     model.add(Dense(250, input_dim=Xtrain.shape[1], init='normal'))
     model.add(PReLU())
@@ -210,7 +210,7 @@ Keras Structure for blending_models models
 ------------------------------------------
 
 def secondlevel_keras_model_1():
-    # create model
+    
     model = Sequential()
     model.add(Dense(150, input_dim = len(base_models)*nclasses, init='normal'))
     model.add(PReLU())
@@ -225,7 +225,7 @@ def secondlevel_keras_model_1():
 keras_secondlevel_model_1 = secondlevel_keras_model_1()
 
 def secondlevel_keras_model_2():
-    # create model
+    
     model = Sequential()
     model.add(Dense(50, input_dim = len(base_models)*nclasses, init='normal'))
     model.add(PReLU())
