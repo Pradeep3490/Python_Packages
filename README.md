@@ -68,9 +68,8 @@ define XGBoost parameters. Here, we're using 2 XGBoost models in base_models and
 After defining parameters, put all base_models XGBOost parameters in a list and
 do the same for blending_models XGBoost parameters
 
-
-
-# params1
+params1
+-------
 eta1 = 0.02
 max_depth1 = 20
 subsample1 = 0.6
@@ -95,7 +94,8 @@ params1 = {
 
 }
 
-# params2
+params2
+-------
 eta2 = 0.001
 max_depth2 = 10
 subsample2 = 0.75
@@ -124,9 +124,12 @@ params2 = {
 xgb_parameters1 = [params1,params2]
 
 
-_________________________________________
-# Second level XGBoost learner parameters
-_________________________________________
+
+Second level XGBoost learner parameters
+---------------------------------------
+
+params3
+-------
 
 eta3 = 0.03
 max_depth3 = 15
@@ -156,35 +159,33 @@ params3 = {
 xgb_parameters2 = [params3]
 
 
+KERAS
+----- 
+   If Keras neural network models are being used in base_models and/or blending_models
+   the user has to define some parameters and model structure for all Keras models being
+   used
 
-____________________________________________________________________________________
-# KERAS
-____________________________________________________________________________________    
-    If Keras neural network models are being used in base_models and/or blending_models
-    the user has to define some parameters and model structure for all Keras models being
-    used
+   Here 1 Keras model is used in base_models and 2 in blending_models
 
-    Here 1 Keras model is used in base_models and 2 in blending_models
+   First we define batch size for the Keras model to use. It is receommended that this
+   number be divisible by the number of rows in training set
 
-    First we define batch size for the Keras model to use. It is receommended that this
-    number be divisible by the number of rows in training set
+   Another point to note is that, if the input training set is in the form of a sparse
+   matrix the Keras model uses a batch generator which to simulatneously sample the training
+   dataset and build models and combine them
 
-    Another point to note is that, if the input training set is in the form of a sparse
-    matrix the Keras model uses a batch generator which to simulatneously sample the training
-    dataset and build models and combine them
 
-#
-  batch = 400 # define batch size as a number that can divide the number of rows in training set
+  batch = 400  "define batch size as a number that can divide the number of rows in training set"
 
 Next define the number of epochs i.e., number of times to go through the entire dataset
 The lists below should reflect the number of Keras defined under base_models and blending_models lists earlier
   
-  base_epochs = [2] # number of times to go through the entire dataset in base_models level
-  second_epochs = [2,2] # number of times to go through the entire dataset in blending_models level
+  base_epochs = [2] 
+  second_epochs = [2,2] 
 
-__________________________________
- # Keras Structure for base models
-__________________________________
+
+ Keras Structure for base models
+--------------------------------
 
 def baseline_keras_model_1():
     # create model
@@ -205,7 +206,8 @@ keras_basemodel_1 = baseline_keras_model_1()
 keras_base_models = [keras_basemodel_1]
 
 
-# Keras Structure for blending_models models
+Keras Structure for blending_models models
+------------------------------------------
 
 def secondlevel_keras_model_1():
     # create model
@@ -217,7 +219,6 @@ def secondlevel_keras_model_1():
     model.add(PReLU())
     model.add(Dropout(0.2))
     model.add(Dense(12, init='normal', activation='softmax'))
-    # Compile model
     model.compile(loss='sparse_categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
     return model
 
@@ -233,7 +234,7 @@ def secondlevel_keras_model_2():
     model.add(PReLU())
     model.add(Dropout(0.05))
     model.add(Dense(12, init='normal', activation='softmax'))
-    # Compile model
+   
     model.compile(loss='sparse_categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
     return model
 
@@ -247,26 +248,29 @@ ________________________________________________________________________________
 Once the definition of parameters and other model related structures are done the user
 can install and import the module from PyPi and user
 
-# For installation
-
+For installation
+----------------
 pip install generalized_blender to install the latest version from PyPi
 
-#Then use the following,
+Then use the following,
 
 from generalized_blender import generalized_blender
 
-# initialize the class object
+initialize the class object
+--------------------------
 
 blend_object = generalized_blender.Blender(base_models, blending_models,n_folds,True,nclasses)
 
-# Running base models
+Running base models
+-------------------
 
 A, B = blend_object.base_learners(Xtrain,Xtest,y,xgb_parameters1, base_epochs,batch,keras_base_models)
 
 The above function returns predictions from the base_level models on both training and test
 datasets which serve as inputs to the blending models next
 
-# Running Blending models
+Running Blending models
+-----------------------
 Result = blend_object.blender(A,B,y,xgb_parameters2, second_epochs, batch, keras_secondlevel_models)
 
 The 'Result' dataset is basically a numpy array of all predicted probabilities for each classfor all
