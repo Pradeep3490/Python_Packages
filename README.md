@@ -15,19 +15,22 @@ Parameters
 -----------
 
 base_models:
-    A list of models to be run as part of base learners on original
-    training dataset
+ 
+ A list of models to be run as part of base learners on original
+ training dataset
 
 Each model must have a .fit and .predict_proba/.predict method a'la
 sklearn
 
 blending_models:
+
 A list of models used to aggregate the outputs of the trained base
 models. Must have a .fit and .predict_proba/.predict method
 
-n_folds: int
-The number of K-folds to use in =cross-validated model training.
-    Currently upto 7 folds are supported
+n_folds: 
+
+The number of K-folds to use in cross-validated model training.
+Currently upto 7 folds are supported
 
 verbose: boolean
 
